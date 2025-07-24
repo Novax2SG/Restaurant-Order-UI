@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout - South Coast Pizza</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">SOUTH COAST <span>PIZZA</span></div>
+    <a href="basket.html" class="basket-link">Back to Basket</a>
+  </header>
+
+  <main class="checkout-area">
+    <h1>Checkout</h1>
+    <form id="checkout-form">
+      <label for="table-number">Enter your table number:</label><br>
+      <input type="number" id="table-number" required min="1" /><br><br>
+
+      <button type="submit">Place Order</button>
+    </form>
+
+    <div id="confirmation" style="display:none;">
+      <h2>Thank you!</h2>
+      <p>Your order has been placed.</p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const tableNumber = document.getElementById('table-number').value;
+
+      if (tableNumber.trim() === "") return;
+
+      // Clear basket & show confirmation
+      localStorage.removeItem('basket');
+      localStorage.removeItem('tipRate');
+
+      document.getElementById('checkout-form').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
