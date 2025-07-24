@@ -6,6 +6,28 @@
   <title>South Coast Pizza</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
+
+<div id="privacy-modal" class="privacy-modal" style="display: none;">
+  <div class="privacy-content">
+    <h3>Privacy Notice</h3>
+    <p>This site uses your browser's localStorage to remember your selected menu items and tips during this visit. No personal data is stored or shared.</p>
+    <button onclick="closePrivacyModal()">OK</button>
+  </div>
+</div>
+
+<script>
+  function closePrivacyModal() {
+    document.getElementById('privacy-modal').style.display = 'none';
+    localStorage.setItem('gdprAccepted', 'true');
+  }
+
+  window.onload = function() {
+    if (!localStorage.getItem('gdprAccepted')) {
+      document.getElementById('privacy-modal').style.display = 'block';
+    }
+  }
+</script>
+
 <body>
   <header class="topbar">
     <div class="logo">SOUTH COAST <span>PIZZA</span></div>
