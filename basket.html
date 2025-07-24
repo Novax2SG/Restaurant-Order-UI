@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Basket - South Coast Pizza</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">SOUTH COAST <span>PIZZA</span></div>
+    <a href="menu.html" class="basket-link">Back to Menu</a>
+  </header>
+
+  <main class="basket-area">
+    <h1>Your Order</h1>
+    <div id="basket-items"></div>
+
+    <div class="tip-section">
+      <p>Add a tip:</p>
+      <button onclick="setTip(0)">No Tip</button>
+      <button onclick="setTip(0.05)">5%</button>
+      <button onclick="setTip(0.1)">10%</button>
+      <button onclick="setTip(0.15)">15%</button>
+    </div>
+
+    <div id="total"></div>
+
+    <a href="checkout.html"><button class="next">Continue to Checkout</button></a>
+  </main>
+
+  <script>
+    let tipRate = 0;
+
+    function loadBasket() {
+      const items = JSON.parse(localStorage.getItem('basket')) || [];
+      const basketDiv = document.getElementById('basket-items');
+      const totalDiv = document.getElementById('total');
+      let total = 0;
+
+      basketDiv.innerHTML = '';
+      items.forEach(item => {
+        basketDiv.innerHTML += `<p>${item.name} - £${item.price.toFixed(2)}</p>`;
+        total += item.price;
+      });
+
+      const tip = total * tipRate;
+      const grandTotal = total + tip;
+
+      totalDiv.innerHTML = `
+        <p>Subtotal: £${total.toFixed(2)}</p>
+        <p>Tip: £${tip.toFixed(2)}</p>
+        <h3>Total: £${grandTotal.toFixed(2)}</h3>
+      `;
+
+      localStorage.setItem('tipRate', tipRate); // Save for checkout
+    }
+
+    function setTip(rate) {
+      tipRate = rate;
+      loadBasket(); // Refresh with new tip
+    }
+
+    window.onload = loadBasket;
+  </script>
+</body>
+</html>

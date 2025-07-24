@@ -43,6 +43,7 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
 ---
 /* optinal for now */
 .menu-container {
@@ -59,4 +60,37 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   width: 200px;
   text-align: center;
+}
+
+---
+/* optinal for now 
+.basket-area and .tip-section */
+.basket-area, .checkout-area {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tip-section button {
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: none;
+  background-color: #0077cc;
+  color: white;
+  cursor: pointer;
+}
+
+.next {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
 }
