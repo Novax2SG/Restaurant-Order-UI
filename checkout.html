@@ -41,21 +41,43 @@
     </div>
   </main>
 
-  <script>
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const tableNumber = document.getElementById('table-number').value;
+<script>
+  document.getElementById('checkout-form').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-      if (tableNumber.trim() === "") return;
+    const tableNum = document.getElementById('table-number').value.trim();
+    const basket = JSON.parse(localStorage.getItem('basket')) || [];
 
-      // Clear basket & show confirmation
-      localStorage.removeItem('basket');
-      localStorage.removeItem('tipRate');
+    if (!tableNum || basket.length === 0) {
+      alert("Please enter a table number and add items to your basket.");
+      return;
+    }
 
-      document.getElementById('checkout-form').style.display = 'none';
-      document.getElementById('confirmation').style.display = 'block';
+    // Group basket items
+    const grouped = {};
+    basket.forEach(item => {
+      if (!grouped[item.id]) {
+        grouped[item.id] = { ...item, qty: 1 };
+      } else {
+        grouped[item.id].qty += 1;
+      }
     });
-  </script>
+
+    // Load existing orders
+    const allOrders = JSON.parse(localStorage.getItem('allOrders')) || {};
+
+    // Store under current table
+    allOrders[tableNum] = Object.values(grouped);
+
+    localStorage.setItem('allOrders', JSON.stringify(allOrders));
+
+    // Clear basket and redirect
+    localStorage.removeItem('basket');
+    alert("Your order has been placed!");
+    window.location.href = 'index.html';
+  });
+</script>
+
   <footer class="footer">
   <p>&copy; 2025 South Coast Pizza | Contact: support@southcoastpizza.co.uk</p>
   <p><a href="#">Privacy Policy</a> | <a href="#">Accessibility</a></p>

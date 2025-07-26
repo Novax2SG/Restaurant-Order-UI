@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - South Coast Pizza</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">SOUTH COAST <span>PIZZA</span></div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main class="main-area">
+    <h2>Current Orders by Table</h2>
+    <div id="orders-list">
+      <!-- JS will load orders here -->
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 South Coast Pizza | Admin Area</p>
+  </footer>
+
+  <script>
+    if (localStorage.getItem('isAdmin') !== 'true') {
+      window.location.href = 'admin.html';
+    }
+
+    const orders = JSON.parse(localStorage.getItem('allOrders')) || {};
+    const container = document.getElementById('orders-list');
+
+    if (Object.keys(orders).length === 0) {
+      container.innerHTML = "<p>No current orders.</p>";
+    } else {
+      for (const [table, items] of Object.entries(orders)) {
+        const list = items.map(item => `<li>${item.name} × ${item.qty} — £${(item.price * item.qty).toFixed(2)}</li>`).join('');
+        container.innerHTML += `
+          <section>
+            <h3>Table ${table}</h3>
+            <ul>${list}</ul>
+          </section>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
