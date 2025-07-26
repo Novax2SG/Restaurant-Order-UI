@@ -61,6 +61,13 @@ body {
   width: 200px;
   text-align: center;
 }
+---
+.menu-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
 
 ---
 /* optinal for now 
