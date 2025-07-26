@@ -62,3 +62,17 @@ function addToBasket(id) {
 }
 
 renderMenu();
+
+// Checkout functionality optional screen reader
+document.getElementById("sr-live").textContent = "Your order has been placed.";
+
+document.getElementById("checkout-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const tableNumber = document.getElementById("table-number").value;
+  if (tableNumber) {
+    document.getElementById("confirmation").style.display = "block";
+    document.getElementById("sr-live").textContent = `Order placed for table ${tableNumber}.`;
+  } else {
+    alert("Please enter a valid table number.");
+  }
+});

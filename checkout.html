@@ -18,16 +18,24 @@
 </header>
 
 
-  <main class="checkout-area">
+  <main class="checkout-area" role="main">
     <h1>Checkout</h1>
     <form id="checkout-form">
-      <label for="table-number">Enter your table number:</label><br>
-      <input type="number" id="table-number" required min="1" /><br><br>
+  <fieldset>
+    <legend>Your Order Details</legend>
 
-      <button type="submit">Place Order</button>
-    </form>
+    <label for="table-number">Enter your table number:</label><br>
+    <input type="number" id="table-number" name="table-number" required min="1" /><br><br>
+
+    <button type="submit">Place Order</button>
+  </fieldset>
+</form>
+
 
     <div id="confirmation" style="display:none;">
+      // optinal screen reader 
+      <div id="sr-live" aria-live="polite" class="sr-only"></div>
+
       <h2>Thank you!</h2>
       <p>Your order has been placed.</p>
     </div>
