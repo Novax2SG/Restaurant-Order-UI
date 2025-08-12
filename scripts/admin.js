@@ -3,7 +3,7 @@ document.getElementById('admin-login-form').addEventListener('submit', function(
   const user = document.getElementById('Admin1').value.trim();
   const pass = document.getElementById('Admin1Pass').value.trim();
 
-  if (user === 'admin' && pass === 'pizzapass') {
+ if (user === 'Admin1' && pass === 'Admin1Pass') {
     // Store login state
     localStorage.setItem('isAdmin', 'true');
     window.location.href = 'admin-dashboard.html';
