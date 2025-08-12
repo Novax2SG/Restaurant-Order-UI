@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo">SOUTH COAST <span>PIZZA</span></div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-    </nav>
-  </header>
+ <header class="topbar">
+  <div class="logo">SOUTH COAST <span>PIZZA</span></div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <button id="logout-btn" class="logout-btn">Logout</button>
+  </nav>
+</header>
+
 
   <main class="main-area">
     <h2>Current Orders (Employee View)</h2>
@@ -44,6 +46,11 @@
         `;
       }
     }
+    // 🔹 Logout button click handler
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      localStorage.removeItem('role'); // Clear the role
+      window.location.href = 'admin.html'; // Redirect to login page
+    });
   </script>
 </body>
 </html>

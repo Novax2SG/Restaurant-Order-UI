@@ -43,6 +43,20 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+-----
+.logout-btn {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logout-btn:hover {
+  background-color: #c1121f;
+}
+
 
 ---
 /* optinal for now */
