@@ -3,35 +3,35 @@ const menuItems = [
     id: 1,
     name: "Margherita Pizza",
     price: 8.99,
-    image: "assets/margherita.jpg",
+    image: "assets/South Coast Menu Images/margherita.png", // updated path
     alt: "A classic Margherita pizza with fresh basil"
   },
   {
     id: 2,
     name: "Pepperoni Pizza",
     price: 9.99,
-    image: "assets/pepperoni.jpg",
+    image: "assets/South Coast Menu Images/pepperoni.png", // updated path
     alt: "Pepperoni pizza with cheese and tomato sauce"
   },
   {
     id: 3,
     name: "Meat feast Pizza",
     price: 10.49,
-    image: "assets/bolognese.jpg",
+    image: "assets/South Coast Menu Images/meatfeast.png", // updated path (assuming meatfeast.png is correct)
     alt: "Pizza topped with bacon, grilled chicken, sausges and jalapenos"
   },
   {
     id: 4,
     name: "Garlic Bread",
     price: 4.99,
-    image: "assets/garlicbread.jpg",
+    image: "assets/South Coast Menu Images/Garlic bread.png", // updated path
     alt: "Toasted garlic bread slices with herbs"
   },
   {
     id: 5,
     name: "Tiramisu",
     price: 5.49,
-    image: "assets/tiramisu.jpg",
+    image: "assets/South Coast Menu Images/Tiramisu.png", // updated path
     alt: "Italian tiramisu dessert consisting of ladyfingers soaked with coffee and rum"
   }
 ];
