@@ -1,0 +1,45 @@
+html
+
+<form id="form">
+  <div class="field">
+    <label for="order_id">order_id</label>
+    <input type="text" name="order_id" id="order_id">
+  </div>
+  <div class="field">
+    <label for="orders">orders</label>
+    <input type="text" name="orders" id="orders">
+  </div>
+  <div class="field">
+    <label for="image_url">image_url</label>
+    <input type="text" name="image_url" id="image_url">
+  </div>
+  <div class="field">
+    <label for="name">name</label>
+    <input type="text" name="name" id="name">
+  </div>
+  <div class="field">
+    <label for="units">units</label>
+    <input type="text" name="units" id="units">
+  </div>
+  <div class="field">
+    <label for="price">price</label>
+    <input type="text" name="price" id="price">
+  </div>
+  <div class="field">
+    <label for="cost">cost</label>
+    <input type="text" name="cost" id="cost">
+  </div>
+  <div class="field">
+    <label for="email">email</label>
+    <input type="text" name="email" id="email">
+  </div>
+
+  <input type="submit" id="button" value="Send Email" >
+</form>
+
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script type="text/javascript">
+  emailjs.init('ZZAWaT0Nn8_4KijD0')
+</script>
