@@ -1,21 +1,54 @@
 const menuItems = [
-  { id: 1, name: "Margherita Pizza", price: 8.99 },
-  { id: 2, name: "Pepperoni Pizza", price: 9.99 },
-  { id: 3, name: "Spaghetti Bolognese", price: 10.49 },
-  { id: 4, name: "Garlic Bread", price: 4.99 },
-  { id: 5, name: "Tiramisu", price: 5.49 }
+  {
+    id: 1,
+    name: "Margherita Pizza",
+    price: 8.99,
+    image: "assets/South Coast Menu Images/margherita.png", // updated path
+    alt: "A classic Margherita pizza with fresh basil"
+  },
+  {
+    id: 2,
+    name: "Pepperoni Pizza",
+    price: 9.99,
+    image: "assets/South Coast Menu Images/pepperoni.png", // updated path
+    alt: "Pepperoni pizza with cheese and tomato sauce"
+  },
+  {
+    id: 3,
+    name: "Meat feast Pizza",
+    price: 10.49,
+    image: "assets/South Coast Menu Images/meatfeast.png", // updated path (assuming meatfeast.png is correct)
+    alt: "Pizza topped with bacon, grilled chicken, sausges and jalapenos"
+  },
+  {
+    id: 4,
+    name: "Garlic Bread",
+    price: 4.99,
+    image: "assets/South Coast Menu Images/Garlic bread.png", // updated path
+    alt: "Toasted garlic bread slices with herbs"
+  },
+  {
+    id: 5,
+    name: "Tiramisu",
+    price: 5.49,
+    image: "assets/South Coast Menu Images/Tiramisu.png", // updated path
+    alt: "Italian tiramisu dessert consisting of ladyfingers soaked with coffee and rum"
+  }
 ];
+
 
 function renderMenu() {
   const container = document.getElementById('menu-container');
   menuItems.forEach(item => {
     const div = document.createElement('div');
     div.classList.add('menu-item');
-    div.innerHTML = `
-      <h3>${item.name}</h3>
-      <p>£${item.price.toFixed(2)}</p>
-      <button onclick="addToBasket(${item.id})">Add to Basket</button>
-    `;
+   div.innerHTML = `
+  <img src="${item.image}" alt="${item.alt}" class="menu-img" />
+  <h3>${item.name}</h3>
+  <p>£${item.price.toFixed(2)}</p>
+  <button onclick="addToBasket(${item.id})">Add to Basket</button>
+`;
+
     container.appendChild(div);
   });
 }
@@ -29,3 +62,17 @@ function addToBasket(id) {
 }
 
 renderMenu();
+
+// Checkout functionality optional screen reader
+document.getElementById("sr-live").textContent = "Your order has been placed.";
+
+document.getElementById("checkout-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const tableNumber = document.getElementById("table-number").value;
+  if (tableNumber) {
+    document.getElementById("confirmation").style.display = "block";
+    document.getElementById("sr-live").textContent = `Order placed for table ${tableNumber}.`;
+  } else {
+    alert("Please enter a valid table number.");
+  }
+});

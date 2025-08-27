@@ -5,42 +5,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout - South Coast Pizza</title>
   <link rel="stylesheet" href="styles/main.css" />
+  
+   <!-- Include EmailJS for sending order confirmation emails -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("service_2ycga18"); //  EmailJS public key
+  })();
+      // 🔹 Added: Email sending function
+    function sendReceiptEmail(customerEmail, orderSummary, totalPrice) {
+      emailjs.send("service_2ycga18", "template_y96jc5l", {
+        customer_email: customerEmail,
+        order_summary: orderSummary,
+        total_price: totalPrice
+      }).then(
+        function(response) {
+          alert("✅ Email receipt sent successfully!");
+        },
+        function(error) {
+          alert("❌ Failed to send email. Please check your address and try again.");
+          console.error("EmailJS error:", error);
+        }
+      );
+    }
+</script>
+
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo">SOUTH COAST <span>PIZZA</span></div>
-    <a href="basket.html" class="basket-link">Back to Basket</a>
-  </header>
+ <header class="topbar">
+  <div class="logo">SOUTH COAST <span>PIZZA</span></div>
+  <nav class="nav-links">
+    <a href="admin.html">Login</a>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="basket.html">Basket</a>
+    <a href="checkout.html">Checkout</a>
+  </nav>
+</header>
 
-  <main class="checkout-area">
+
+  <main class="checkout-area" role="main">
     <h1>Checkout</h1>
     <form id="checkout-form">
-      <label for="table-number">Enter your table number:</label><br>
-      <input type="number" id="table-number" required min="1" /><br><br>
+  <fieldset>
+    <legend>Your Order Details</legend>
 
-      <button type="submit">Place Order</button>
-    </form>
+    <label for="table-number">Enter your table number:</label><br>
+    <input type="number" id="table-number" name="table-number" required min="1" /><br><br>
+
+    <!-- 🔹 Added: Email input for receipt -->
+        <label for="customer-email">Enter your email for a receipt (optional):</label><br>
+        <input type="email" id="customer-email" name="customer-email" /><br><br>
+
+    <!-- 🔹 Added id to the Place Order button for direct event targeting -->
+<button type="submit" id="place-order-btn">Place Order</button>
+  </fieldset>
+</form> 
+
 
     <div id="confirmation" style="display:none;">
+      // optinal screen reader 
+      <div id="sr-live" aria-live="polite" class="sr-only"></div>
+
       <h2>Thank you!</h2>
       <p>Your order has been placed.</p>
     </div>
   </main>
 
-  <script>
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const tableNumber = document.getElementById('table-number').value;
+<script>
+  document.getElementById("place-order-btn").addEventListener("click", function(e) {
+  e.preventDefault(); // 🔹 Prevent form submission
 
-      if (tableNumber.trim() === "") return;
+    const tableNum = document.getElementById('table-number').value.trim();
+    const customerEmail = document.getElementById('customer-email').value.trim(); // 🔹 Added: get email
+    const basket = JSON.parse(localStorage.getItem('basket')) || [];
 
-      // Clear basket & show confirmation
-      localStorage.removeItem('basket');
-      localStorage.removeItem('tipRate');
+    if (!tableNum || basket.length === 0) {
+      alert("Please enter a table number and add items to your basket.");
+      return;
+    }
 
-      document.getElementById('checkout-form').style.display = 'none';
-      document.getElementById('confirmation').style.display = 'block';
+    // Group basket items
+    const grouped = {};
+    basket.forEach(item => {
+      if (!grouped[item.id]) {
+        grouped[item.id] = { ...item, qty: 1 };
+      } else {
+        grouped[item.id].qty += 1;
+      }
     });
-  </script>
+
+    // Load existing orders
+    const allOrders = JSON.parse(localStorage.getItem('allOrders')) || {};
+
+    // Store under current table
+    allOrders[tableNum] = Object.values(grouped);
+
+    localStorage.setItem('allOrders', JSON.stringify(allOrders));
+
+    // 🔹 Prepare order summary and total for email
+    const orderSummary = basket.map(item => `${item.name} x${item.qty || 1}`).join(', ');
+    const totalPrice = basket.reduce((sum, item) => sum + (item.price * (item.qty || 1)), 0).toFixed(2);
+
+    // 🔹 Send email if address provided
+    if (customerEmail) {
+      sendReceiptEmail(customerEmail, orderSummary, totalPrice);
+    }
+
+    // Clear basket and redirect
+    localStorage.removeItem('basket');
+    alert("Your order has been placed!");
+    window.location.href = 'index.html';
+  });
+</script>
+
+  <footer class="footer">
+   <div class="footer-content">
+  <p>&copy; 2025 South Coast Pizza | Contact: southcoastpizzaheadquarters@gmail.com</p>
+  <p><a href="privacy.html">Privacy Policy & GDPR</a> | <a href="terms.html">Terms & Conditions</a></p>
+  </div> 
+</footer>
 </body>
 </html>

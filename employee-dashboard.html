@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Dashboard - South Coast Pizza</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+ <header class="topbar">
+  <div class="logo">SOUTH COAST <span>PIZZA</span></div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <button id="logout-btn" class="logout-btn">Logout</button>
+  </nav>
+</header>
+
+
+  <main class="main-area">
+    <h2>Current Orders (Employee View)</h2>
+    <div id="orders-list"></div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 South Coast Pizza | Employee Area</p>
+  </footer>
+
+  <script>
+    if (localStorage.getItem('role') !== 'employee') {
+      window.location.href = 'admin.html';
+    }
+
+    let orders = JSON.parse(localStorage.getItem('allOrders')) || {};
+    let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || {};
+    const container = document.getElementById('orders-list');
+
+    // 🔹 Render orders with Cancel and Add Item buttons
+    function renderOrders() {
+      orders = JSON.parse(localStorage.getItem('allOrders')) || {};
+      container.innerHTML = '';
+      if (Object.keys(orders).length === 0) {
+        container.innerHTML = "<p>No current orders.</p>";
+        return;
+      }
+      for (const [table, items] of Object.entries(orders)) {
+        const list = items.map(item => `<li>${item.name} × ${item.qty || 1} — £${(item.price * (item.qty || 1)).toFixed(2)}</li>`).join('');
+        container.innerHTML += `
+          <section>
+            <h3>Table ${table}</h3>
+            <ul>${list}</ul>
+            <button onclick=\"addItemToOrder('${table}')\">Add Item</button>
+            <button onclick=\"cancelOrder('${table}')\">Cancel Order</button>
+          </section>
+        `;
+      }
+    }
+
+    // 🔹 Add item to order for a table (now logs to history)
+    window.addItemToOrder = function(table) {
+      const name = prompt("Enter item name:");
+      const price = parseFloat(prompt("Enter item price (£):"));
+      if (!name || isNaN(price)) {
+        alert("Invalid entry.");
+        return;
+      }
+      orders[table].push({ name, price, qty: 1 });
+      // 🔹 Log to orderHistory for admin visibility
+      let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+      orderHistory.push({
+        table,
+        items: [{ name, price, qty: 1 }],
+        status: "Item Added by Employee",
+        date: new Date().toLocaleString()
+      });
+      localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+      localStorage.setItem('allOrders', JSON.stringify(orders));
+      renderOrders();
+    };
+
+    // 🔹 Cancel order for a table (employee version, logs to history)
+    window.cancelOrder = function(table) {
+      // 🔹 Log to orderHistory for admin visibility
+      let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+      orderHistory.push({
+        table,
+        items: orders[table],
+        status: "Cancelled by Employee",
+        date: new Date().toLocaleString()
+      });
+      localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+      delete orders[table];
+      localStorage.setItem('allOrders', JSON.stringify(orders));
+      renderOrders();
+    };
+
+    // Initial render
+    renderOrders();
+    // 🔹 Logout button click handler
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      localStorage.removeItem('role'); // Clear the role
+      window.location.href = 'admin.html'; // Redirect to login page
+    });
+  </script>
+</body>
+</html>

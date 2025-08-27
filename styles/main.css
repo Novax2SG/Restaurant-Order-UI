@@ -43,6 +43,20 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+-----
+.logout-btn {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logout-btn:hover {
+  background-color: #c1121f;
+}
+
 
 ---
 /* optinal for now */
@@ -60,6 +74,13 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   width: 200px;
   text-align: center;
+}
+---
+.menu-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 ---
@@ -122,3 +143,34 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.nav-links a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+/* Footer Css */
+
+.footer {
+  background-color: #00aaff;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+  font-size: 0.9em;
+}
+
+.footer a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
